@@ -3,7 +3,7 @@
     <ul class="navigation-list">
       <li class="navigation-list__item">
         <NuxtLink to="/" class="navigation-list__link">
-          <img src="@/images/logo.png" alt="logo" class="navigation-list__logo">
+          <img src="../../public/images/logo.png" alt="logo" class="navigation-list__logo">
         </NuxtLink>
       </li>
       <li class="navigation-list__item">
