@@ -1,24 +1,35 @@
 <template>
-  <div class="filter-wrapper">
-    <div class="filter-title">
+  <div v-click-outside="closeCheckboxList" class="filter-wrapper">
+    <div
+        @click="openCheckboxList"
+        class="filter-title"
+        :class="{ 'filter-title_open': showList }"
+    >
       {{ title }}
     </div>
-    <div class="filter-list-wrapper">
-      <div v-for="item in items" :key="item" class="filter-list">
-        <input
-            type="checkbox"
-            :value="item"
-            class="filter-list__input"
-            @click="changeCheckbox(item)"
-        >
-        <label class="filter-list__label">{{ item }}</label>
+    <transition name="fade">
+      <div
+          v-if="showList"
+          class="filter-list-wrapper"
+          :class="{ 'filter-list_open': showList }"
+      >
+        <div v-for="item in items" :key="item" class="filter-list">
+          <input
+              type="checkbox"
+              :value="item"
+              class="filter-list__input"
+              @click="changeCheckbox(item)"
+          >
+          <label class="filter-list__label">{{ item }}</label>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import VClickOutside from 'click-outside-vue3'
 
   const props = defineProps({
     title: {
@@ -32,40 +43,100 @@ import { ref } from 'vue'
   });
   const emit = defineEmits(['changeCheckbox']);
 
+  let showList = ref(false);
   const checkboxList = ref([]);
 
-  function changeCheckbox (item) {
-    const index = checkboxList.value.indexOf(item)
-    if (index !== -1) {
-      checkboxList.value.splice(index, 1)
-    } else {
-      checkboxList.value.push(item)
-    }
-    emit('changeCheckbox', checkboxList.value)
+  function openCheckboxList() {
+    showList.value = !showList.value;
   }
 
+  function closeCheckboxList() {
+    showList.value = false;
+  }
 
+  function changeCheckbox (item) {
+    const index = checkboxList.value.indexOf(item);
+    if (index !== -1) {
+      checkboxList.value.splice(index, 1);
+    } else {
+      checkboxList.value.push(item);
+    }
+    emit('changeCheckbox', checkboxList.value);
+  }
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .filter-wrapper {
-  padding: 20px;
+  position: relative;
 }
 .filter-title {
-  margin-bottom: 30px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.7px;
   text-align: center;
+  background: #283655;
+  border: 1px solid #4d648d;
+  border-radius: 4px;
+  color: #4d648d;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+
+  &_open {
+    box-shadow: 0 0 10px #4d648d;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 14px;
+    height: 14px;
+    border-right: 2px solid #4d648d;
+    transform: rotate(42deg);
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    width: 14px;
+    height: 14px;
+    border-left: 2px solid #4d648d;
+    transform: rotate(-42deg);
+  }
 }
 .filter-list-wrapper {
+  position: absolute;
+  z-index: 10;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 8px;
+  padding: 20px;
+  background: #283655;
+  width: 100%;
+  border: 1px solid #4d648d;
+  border-radius: 4px;
 }
 .filter-list {
   display: flex;
   align-items: center;
+  transition: all 0.5s ease-in-out;
+
+  &_open {
+    box-shadow: 0 0 10px #4d648d;
+  }
 
   &__input {
     width: 20px;

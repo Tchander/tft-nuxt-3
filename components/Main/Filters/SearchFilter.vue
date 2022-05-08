@@ -7,6 +7,9 @@
         v-model="model"
     >
     <label class="search-label">Поиск по чемпиону:</label>
+    <transition name="fade">
+      <div v-if="modelValue" class="search-close" @click="clearInput" />
+    </transition>
   </div>
 </template>
 
@@ -24,19 +27,21 @@
     get: () => props.modelValue,
     set: (value) => emit('update:modelValue', value)
   })
+
+  function clearInput() {
+    emit('update:modelValue', '')
+  }
 </script>
 
 <style lang="scss" scoped>
-.search-label {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-  letter-spacing: 0.7px;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  z-index: -1;
-  color: #fff;
-  transition: .5s all ease-in-out;
 }
 .search {
   width: 100%;
@@ -47,11 +52,11 @@
   font-size: 20px;
   font-weight: 500;
   padding: 10px;
-  transition: .5s all ease-in-out;
+  transition: 0.5s all ease-in-out;
 
   &::placeholder {
     color: #4d648d;
-    transition: .5s opacity ease-in-out;
+    transition: 0.5s opacity ease-in-out;
   }
 
   &:focus {
@@ -67,6 +72,47 @@
     &::placeholder {
       opacity: 0;
     }
+  }
+}
+.search-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  letter-spacing: 0.7px;
+  opacity: 0;
+  z-index: -1;
+  color: #fff;
+  transition: 0.5s all ease-in-out;
+}
+.search-close {
+  position: absolute;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  top: 12px;
+  right: -10px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    border-right: 2px solid #4d648d;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    transform: rotate(-45deg);
+    border-left: 2px solid #4d648d;
   }
 }
 </style>

@@ -2,22 +2,25 @@
   <div class="page">
     <main>
       <ContentSection>
-        <SearchFilter
-            v-model="searchChampionByName"
-            class="search-wrapper"
-        />
+        <div class="champions-filters">
+          <ChampionsFilter
+              v-model="championsByClass"
+              v-bind="CHAMPIONS_FILTER_BY_CLASS"
+              @changeCheckbox="changeCheckbox"
+              class="champions-class-filter"
+          />
+          <SearchFilter
+              v-model="searchChampionByName"
+              class="champions-search"
+          />
+        </div>
         <ul class="champions-list">
-          <ChampionsCard v-for="champion in filteredList" :key="champion.id" :champion="champion" />
+          <TransitionGroup name="list">
+            <ChampionsCard v-for="champion in filteredList" :key="champion.id" :champion="champion" />
+          </TransitionGroup>
         </ul>
       </ContentSection>
     </main>
-    <aside class="left-filter-wrapper">
-      <ChampionsFilter
-          v-model="championsByClass"
-          v-bind="CHAMPIONS_FILTER_BY_CLASS"
-          @changeCheckbox="changeCheckbox"
-      />
-    </aside>
   </div>
 </template>
 
@@ -64,13 +67,26 @@
 </script>
 
 <style lang="scss" scoped>
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
 .page {
   position: relative;
   margin-top: 150px;
 }
-.search-wrapper {
-  position: relative;
+.champions-filters {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(2, 1fr);
   margin: 0 auto 70px;
+}
+.champions-search {
   max-width: 420px;
 }
 .champions-list {
@@ -78,15 +94,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
   padding-bottom: 80px;
-}
-.left-filter-wrapper {
-  position: absolute;
-  top: 60px;
-  left: 30px;
-  width: 100%;
-  max-width: 360px;
-  border: 1px solid #4d648d;
-  border-radius: 4px;
 }
 </style>
 
