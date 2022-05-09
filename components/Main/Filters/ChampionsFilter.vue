@@ -51,10 +51,6 @@ import { ref } from 'vue'
     showList.value = !showList.value;
   }
 
-  function closeCheckboxList() {
-    showList.value = false;
-  }
-
   function changeCheckbox (item) {
     const index = checkboxList.value.indexOf(item);
     if (index !== -1) {
@@ -76,9 +72,11 @@ import { ref } from 'vue'
 .fade-leave-to {
   opacity: 0;
 }
+
 .filter-wrapper {
   position: relative;
 }
+
 .filter-title {
   font-size: 20px;
   font-weight: 500;
@@ -118,6 +116,7 @@ import { ref } from 'vue'
     transform: rotate(-42deg);
   }
 }
+
 .filter-list-wrapper {
   position: absolute;
   z-index: 10;
@@ -137,6 +136,7 @@ import { ref } from 'vue'
     box-shadow: 0 0 10px #4d648d;
   }
 }
+
 .filter-list {
   display: flex;
   align-items: center;
