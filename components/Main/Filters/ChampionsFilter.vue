@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="closeCheckboxList" class="filter-wrapper">
+  <div class="filter-wrapper">
     <div
         @click="openCheckboxList"
         class="filter-title"
@@ -9,15 +9,16 @@
     </div>
     <transition name="fade">
       <div
-          v-if="showList"
+          v-show="showList"
           class="filter-list-wrapper"
-          :class="{ 'filter-list_open': showList }"
+          :class="{ 'filter-list-wrapper_open': showList }"
       >
         <div v-for="item in items" :key="item" class="filter-list">
           <input
               type="checkbox"
               :value="item"
               class="filter-list__input"
+              :checked="checked"
               @click="changeCheckbox(item)"
           >
           <label class="filter-list__label">{{ item }}</label>
@@ -29,7 +30,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import VClickOutside from 'click-outside-vue3'
 
   const props = defineProps({
     title: {
@@ -45,6 +45,7 @@ import VClickOutside from 'click-outside-vue3'
 
   let showList = ref(false);
   const checkboxList = ref([]);
+  const checked = ref(false);
 
   function openCheckboxList() {
     showList.value = !showList.value;
@@ -128,15 +129,18 @@ import VClickOutside from 'click-outside-vue3'
   width: 100%;
   border: 1px solid #4d648d;
   border-radius: 4px;
+  //opacity: 0;
+  transition: all 0.5s ease-in-out;
+
+  &_open {
+    //opacity: 1;
+    box-shadow: 0 0 10px #4d648d;
+  }
 }
 .filter-list {
   display: flex;
   align-items: center;
   transition: all 0.5s ease-in-out;
-
-  &_open {
-    box-shadow: 0 0 10px #4d648d;
-  }
 
   &__input {
     width: 20px;

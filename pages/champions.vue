@@ -25,45 +25,45 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
-    import { storeToRefs } from 'pinia';
-    import { useChampionsStore } from "@/store/champions";
-    import ContentSection from "@/components/ContentSection";
-    import ChampionsCard from "@/components/Main/Champions/ChampionsCard";
-    import SearchFilter from "@/components/Main/Filters/SearchFilter";
-    import ChampionsFilter from "@/components/Main/Filters/ChampionsFilter";
-    import { CHAMPIONS_FILTER_BY_CLASS } from "@/assets/const";
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useChampionsStore } from "@/store/champions";
+import ContentSection from "@/components/ContentSection";
+import ChampionsCard from "@/components/Main/Champions/ChampionsCard";
+import SearchFilter from "@/components/Main/Filters/SearchFilter";
+import ChampionsFilter from "@/components/Main/Filters/ChampionsFilter";
+import { CHAMPIONS_FILTER_BY_CLASS } from "@/assets/const";
 
-    const championsStore = useChampionsStore();
-    const { champions } = storeToRefs(championsStore);
-    const searchChampionByName = ref('');
-    const championsByClass = ref([]);
+const championsStore = useChampionsStore();
+const { champions } = storeToRefs(championsStore);
+const searchChampionByName = ref('');
+const championsByClass = ref([]);
 
-    const filteredList = computed(() => {
-      const result = champions.value.filter((champion) => {
-        return champion.name.toLowerCase().includes(searchChampionByName.value.toLowerCase())
-      })
-      if (championsByClass.value.length) {
-        if (result.length !== 0) {
-          return filterByClass(result)
-        }
-        return champions.value
-      }
-      return result.length !== 0 ? result : champions.value
-    });
-
-    function changeCheckbox (checkboxList) {
-      championsByClass.value = checkboxList
+const filteredList = computed(() => {
+  const result = champions.value.filter((champion) => {
+    return champion.name.toLowerCase().includes(searchChampionByName.value.toLowerCase())
+  })
+  if (championsByClass.value.length) {
+    if (result.length !== 0) {
+      return filterByClass(result)
     }
+    return champions.value
+  }
+  return result.length !== 0 ? result : champions.value
+});
 
-    function filterByClass (championsList) {
-      return championsList.filter((champion) => {
-        if (championsByClass.value.length > champion.classes.length) {
-          return false
-        }
-        return championsByClass.value.every(el => champion.classes.includes(el))
-      })
+function changeCheckbox (checkboxList) {
+  championsByClass.value = checkboxList
+}
+
+function filterByClass (championsList) {
+  return championsList.filter((champion) => {
+    if (championsByClass.value.length > champion.classes.length) {
+      return false
     }
+    return championsByClass.value.every(el => champion.classes.includes(el))
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -75,7 +75,6 @@
 .list-leave-to {
   opacity: 0;
 }
-
 .page {
   position: relative;
   margin-top: 150px;
@@ -96,4 +95,3 @@
   padding-bottom: 80px;
 }
 </style>
-
