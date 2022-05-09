@@ -77,12 +77,13 @@ summary,
 time,
 mark,
 audio,
-video {
+video,
+input {
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
-  font-family: sans-serif;
+  font-family: ui-sans-serif;
   vertical-align: baseline;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -97,10 +98,6 @@ body {
   padding: 0;
   color: #fff;
   background: #283655;
-}
-
-input {
-  margin: 0;
 }
 
 ul {

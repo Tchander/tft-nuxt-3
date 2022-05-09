@@ -27,7 +27,7 @@ export const CLASSES = {
     enchanter: 'Чародей',
     mastermind: 'Главарь',
     glutton: 'Гурман',
-}
+};
 
 export const CLASS_EMBLEMS = {
     Хекстековый: '/images/classes/hextech.png',
@@ -58,9 +58,11 @@ export const CLASS_EMBLEMS = {
     Чародей: '/images/classes/enchanter.png',
     Главарь: '/images/classes/mastermind.png',
     Гурман: '/images/classes/glutton.png',
-}
+};
 
 export const CHAMPIONS_FILTER_BY_CLASS = {
     title: 'Синергии',
     items: Object.values(CLASSES),
-}
+};
+
+export const CHAMPIONS_RANKS = [1, 2, 3, 4, 5];

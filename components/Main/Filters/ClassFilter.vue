@@ -3,7 +3,10 @@
     <div
         @click="openCheckboxList"
         class="filter-title"
-        :class="{ 'filter-title_open': showList }"
+        :class="{
+          'filter-title_open': showList,
+          'filter-title_active': checkboxList.length
+        }"
     >
       {{ title }}
     </div>
@@ -81,7 +84,6 @@ import { ref } from 'vue'
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.7px;
-  text-align: center;
   background: #283655;
   border: 1px solid #4d648d;
   border-radius: 4px;
@@ -92,6 +94,10 @@ import { ref } from 'vue'
 
   &_open {
     box-shadow: 0 0 10px #4d648d;
+  }
+
+  &_active {
+    color: #d0e1f9;
   }
 
   &:after {
@@ -121,18 +127,16 @@ import { ref } from 'vue'
   position: absolute;
   z-index: 10;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px 8px;
   padding: 20px;
   background: #283655;
   width: 100%;
   border: 1px solid #4d648d;
   border-radius: 4px;
-  //opacity: 0;
   transition: all 0.5s ease-in-out;
 
   &_open {
-    //opacity: 1;
     box-shadow: 0 0 10px #4d648d;
   }
 }

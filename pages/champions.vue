@@ -3,7 +3,7 @@
     <main>
       <ContentSection>
         <div class="champions-filters">
-          <ChampionsFilter
+          <ClassFilter
               v-model="championsByClass"
               v-bind="CHAMPIONS_FILTER_BY_CLASS"
               @changeCheckbox="changeCheckbox"
@@ -11,7 +11,13 @@
           />
           <SearchFilter
               v-model="searchChampionByName"
-              class="champions-search"
+              class="champions-search-filter"
+          />
+          <RankFilter
+              v-model="championsByRank"
+              :items="CHAMPIONS_RANKS"
+              @changeRanks="changeRanks"
+              class="champions-rank-filter"
           />
         </div>
         <ul class="champions-list">
@@ -31,38 +37,58 @@ import { useChampionsStore } from "@/store/champions";
 import ContentSection from "@/components/ContentSection";
 import ChampionsCard from "@/components/Main/Champions/ChampionsCard";
 import SearchFilter from "@/components/Main/Filters/SearchFilter";
-import ChampionsFilter from "@/components/Main/Filters/ChampionsFilter";
-import { CHAMPIONS_FILTER_BY_CLASS } from "@/assets/const";
+import ClassFilter from "@/components/Main/Filters/ClassFilter";
+import RankFilter from "@/components/Main/Filters/RankFilter";
+import { CHAMPIONS_FILTER_BY_CLASS, CHAMPIONS_RANKS } from "@/assets/const";
 
 const championsStore = useChampionsStore();
 const { champions } = storeToRefs(championsStore);
 const searchChampionByName = ref('');
 const championsByClass = ref([]);
+const championsByRank = ref([]);
 
 const filteredList = computed(() => {
-  const result = champions.value.filter((champion) => {
-    return champion.name.toLowerCase().includes(searchChampionByName.value.toLowerCase())
+  let result = champions.value.filter((champion) => {
+    return champion.name.toLowerCase().includes(searchChampionByName.value.toLowerCase());
   })
   if (championsByClass.value.length) {
     if (result.length !== 0) {
-      return filterByClass(result)
+      result = filterByClass(result);
+    } else {
+      result = champions.value;
     }
-    return champions.value
   }
-  return result.length !== 0 ? result : champions.value
+  if (championsByRank.value.length) {
+    if (result.length !== 0) {
+      result = filterByRank(result);
+    } else {
+      result = champions.value;
+    }
+  }
+  return result;
 });
 
 function changeCheckbox (checkboxList) {
-  championsByClass.value = checkboxList
+  championsByClass.value = checkboxList;
+}
+
+function changeRanks (rankList) {
+  championsByRank.value = rankList;
 }
 
 function filterByClass (championsList) {
   return championsList.filter((champion) => {
     if (championsByClass.value.length > champion.classes.length) {
-      return false
+      return false;
     }
-    return championsByClass.value.every(el => champion.classes.includes(el))
-  })
+    return championsByClass.value.every(el => champion.classes.includes(el));
+  });
+}
+
+function filterByRank(championsList) {
+  return championsList.filter((champion) => {
+    return championsByRank.value.includes(champion.rank);
+  });
 }
 </script>
 
@@ -82,11 +108,11 @@ function filterByClass (championsList) {
 .champions-filters {
   display: grid;
   gap: 40px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 0 auto 70px;
 }
-.champions-search {
-  max-width: 420px;
+.champions-search-filter {
+  position: relative;
 }
 .champions-list {
   display: grid;

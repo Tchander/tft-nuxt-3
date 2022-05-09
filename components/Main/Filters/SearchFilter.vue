@@ -48,7 +48,7 @@
   background: #283655;
   border: 1px solid #4d648d;
   border-radius: 4px;
-  color: #fff;
+  color: #d0e1f9;
   font-size: 20px;
   font-weight: 500;
   padding: 10px;
@@ -82,7 +82,7 @@
   letter-spacing: 0.7px;
   opacity: 0;
   z-index: -1;
-  color: #fff;
+  color: #d0e1f9;
   transition: 0.5s all ease-in-out;
 }
 .search-close {
@@ -92,27 +92,40 @@
   height: 20px;
   top: 12px;
   right: -10px;
+  transition: all 0.5s ease-in-out;
 
   &:after {
     content: '';
     position: absolute;
     top: -7px;
-    right: 6px;
+    right: 24px;
     width: 20px;
     height: 20px;
     transform: rotate(45deg);
     border-right: 2px solid #4d648d;
+    transition: all 0.5s ease-in-out;
   }
 
   &:before {
     content: '';
     position: absolute;
     top: -7px;
-    right: -8px;
+    right: 10px;
     width: 20px;
     height: 20px;
     transform: rotate(-45deg);
     border-left: 2px solid #4d648d;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &:hover {
+    &:after {
+      border-right: 2px solid #d0e1f9;
+    }
+
+    &:before {
+      border-left: 2px solid #d0e1f9;
+    }
   }
 }
 </style>
