@@ -34,6 +34,10 @@
   font-size: 24px;
   font-weight: 500;
 
+  @media (max-width: 1279px) {
+    padding: 20px 30px;
+  }
+
   &__item {
     margin-right: 30px;
   }

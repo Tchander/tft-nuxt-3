@@ -101,20 +101,68 @@ function filterByRank(championsList) {
 .page {
   position: relative;
   margin-top: 150px;
+
+  @media (max-width: 767px) {
+    margin-top: 120px;
+  }
 }
 .champions-filters {
   display: grid;
   gap: 40px;
   grid-template-columns: repeat(3, 1fr);
   margin: 0 auto 70px;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
+.champions-class-filter {
+  @media (max-width: 1023px) {
+    order: 3;
+  }
+}
+
 .champions-search-filter {
   position: relative;
+  @media (max-width: 1023px) {
+    order: 1;
+  }
 }
+
+.champions-rank-filter {
+  @media (max-width: 1023px) {
+    order: 2;
+  }
+
+  @media (max-width: 767px) {
+    height: 45px;
+  }
+}
+
 .champions-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  gap: 30px;
   padding-bottom: 80px;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: 30px;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 230px;
+    margin: 0 auto;
+  }
 }
 </style>

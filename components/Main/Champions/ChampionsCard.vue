@@ -117,6 +117,10 @@ import { CLASS_EMBLEMS } from "@/assets/const";
 
   &__text {
     margin-left: 10px;
+
+    @media (max-width: 1279px) {
+      margin-left: 5px;
+    }
   }
 
   &__emblems {
@@ -130,6 +134,14 @@ import { CLASS_EMBLEMS } from "@/assets/const";
     width: 25%;
     position: absolute;
     left: 145px;
+
+    @media (max-width: 1279px) {
+      left: 137px;
+    }
+
+    @media (max-width: 767px) {
+      left: 134px;
+    }
 
     &_1 {
       top: -15px;
