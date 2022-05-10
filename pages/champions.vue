@@ -51,19 +51,16 @@ const filteredList = computed(() => {
   let result = champions.value.filter((champion) => {
     return champion.name.toLowerCase().includes(searchChampionByName.value.toLowerCase());
   })
+  if (!championsByClass.value.length &&
+      !championsByRank.value.length &&
+      !result.length) {
+    return champions.value;
+  }
   if (championsByClass.value.length) {
-    if (result.length !== 0) {
-      result = filterByClass(result);
-    } else {
-      result = champions.value;
-    }
+    result = filterByClass(result);
   }
   if (championsByRank.value.length) {
-    if (result.length !== 0) {
-      result = filterByRank(result);
-    } else {
-      result = champions.value;
-    }
+    result = filterByRank(result);
   }
   return result;
 });
